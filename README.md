@@ -1,6 +1,10 @@
 # AnjoDaMorte
 Um jogo criado para passar de ano
 
+# VERSÃO DO UNITY
+
+*2019.3.13f1*
+
 # BRANCHES
 
 São linhas independentes de desenvolvimento nas quais podemos trabalhar livremente, versionando quando quisermos, sem atrapalhar outras mudanças no código original.
