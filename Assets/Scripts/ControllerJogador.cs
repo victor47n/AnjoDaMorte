@@ -6,68 +6,118 @@ using UnityEngine;
 
 public class ControllerJogador : MonoBehaviour
 {
+    Rigidbody rigidBody;
+    Animator animacao;
     /* Velocidade dos personagens */
     public float Velocidade = 2;
-    Vector3 direcao;
-
+    Vector3 olharNaPosicao;
     public LayerMask MascaraChao;
-
     public GameObject TextoGameOver;
 
-    // Update is called once per frame
+    Transform cam;
+    Vector3 camForward;
+    Vector3 move;
+    Vector3 moveInput;
+
+    float forwardAmount;
+    float turnAmount;
+
+    void Start()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+        SetupAnimator();
+
+        cam = Camera.main.transform;
+    }
+
     void Update()
     {
-        float eixoX = Input.GetAxis("Horizontal");
-        float eixoZ = Input.GetAxis("Vertical");
+        /* Cria um raio que segue aonde o mouse ta */
+        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        direcao = new Vector3(eixoX, 0, eixoZ);
+        /* Guarda aonde o raio toca */
+        // RaycastHit impacto;
+        RaycastHit impacto;
 
-        /* Muda a animação entre Idle e Correndo */
-        if (direcao != Vector3.zero)
+        if (Physics.Raycast(raio, out impacto, 100, MascaraChao))
         {
-            GetComponent<Animator>().SetBool("Movendo", true);
-        } 
-        else
-        {
-            GetComponent<Animator>().SetBool("Movendo", false);
+            olharNaPosicao = impacto.point;
         }
+
+        Vector3 olharNaDirecao = olharNaPosicao - transform.position;
+        olharNaDirecao.y = 0;
+
+        transform.LookAt(transform.position + olharNaDirecao, Vector3.up);
+
     }
 
     /* FixedUpdate roda em um tempo fixo e nao em todo frame do jogo como o Update*/
     void FixedUpdate()
     {
-        /* Pegando o Rigidbody e movendo a posição que o Rigidbody já está + a posição que eu quero ir */
-        GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + (direcao * Velocidade * Time.deltaTime));
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        /* Cria um raio que segue aonde o mouse ta */
-        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // Debug.DrawRay(raio.origin, raio.direction * 100, Color.red);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-
-        /* Guarda aonde o raio toca */
-        // RaycastHit impacto;
-        float impacto;
-
-        // if(Physics.Raycast(raio, out impacto, 100, MascaraChao))
-        // {
-        //     Vector3 posicaoMiraJogador = impacto.point - transform.position;
-        //     // Vector3 posicaoMiraJogador = raio.GetPoint(impacto);
-
-        //     // posicaoMiraJogador.z = transform.position.z;
-        //     posicaoMiraJogador.y = transform.position.y;
-        //     // posicaoMiraJogador.x = transform.position.x;
-
-        //     Quaternion novaRotacao = Quaternion.LookRotation(posicaoMiraJogador);
-
-        //     GetComponent<Rigidbody>().MoveRotation(novaRotacao);
-
-        // }
-        if(groundPlane.Raycast(raio, out impacto))
+        if (cam != null)
         {
-            Vector3 posicaoMiraJogador = raio.GetPoint(impacto);
-            Debug.DrawLine(raio.origin, posicaoMiraJogador, Color.red);
+            camForward = Vector3.Scale(cam.up, new Vector3(1, 0, 1)).normalized;
+            move = vertical * camForward + horizontal * cam.right;
+        }
+        else
+        {
+            move = vertical * Vector3.forward + horizontal * Vector3.right;
+        }
 
-            transform.LookAt(new Vector3(posicaoMiraJogador.x, transform.position.y, posicaoMiraJogador.z));
+        if (move.magnitude > 1)
+        {
+            move.Normalize();
+        }
+
+        Move(move);
+
+        Vector3 movimento = new Vector3(horizontal, 0, vertical);
+        movimento.Normalize();
+
+        rigidBody.AddForce(movimento * Velocidade / Time.deltaTime);
+    }
+
+    void Move(Vector3 move)
+    {
+        if (move.magnitude > 1)
+        {
+            move.Normalize();
+        }
+
+        this.moveInput = move;
+
+        ConvertMoveInput();
+        UpdateAnimator();
+    }
+
+    void ConvertMoveInput()
+    {
+        Vector3 localMove = transform.InverseTransformDirection(moveInput);
+        turnAmount = localMove.x;
+
+        forwardAmount = localMove.z;
+    }
+    void UpdateAnimator()
+    {
+        animacao.SetFloat("Forward", forwardAmount, 0.1f, Time.deltaTime);
+        animacao.SetFloat("Turn", turnAmount, 0.1f, Time.deltaTime);
+    }
+
+    void SetupAnimator()
+    {
+        animacao = GetComponent<Animator>();
+
+        foreach (var childAnimator in GetComponentsInChildren<Animator>())
+        {
+            if (childAnimator != animacao)
+            {
+                animacao.avatar = childAnimator.avatar;
+                Destroy(childAnimator);
+                break;
+            }
         }
     }
 }
