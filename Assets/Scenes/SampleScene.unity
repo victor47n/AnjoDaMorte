@@ -1486,6 +1486,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3351764680912344784, guid: bfcf752afc89ec9468f8a8137baca841,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351764680912344784, guid: bfcf752afc89ec9468f8a8137baca841,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9031928695931002489, guid: bfcf752afc89ec9468f8a8137baca841,
         type: 3}
       propertyPath: m_Name
@@ -1579,6 +1589,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1491050657, guid: c17b6289574a1154b8ce7673aabb27be, type: 3}
+      propertyPath: lengthInSec
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2326218518648023896, guid: c17b6289574a1154b8ce7673aabb27be,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1638,6 +1652,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Muzzle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040461193964505798, guid: c17b6289574a1154b8ce7673aabb27be,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c17b6289574a1154b8ce7673aabb27be, type: 3}
