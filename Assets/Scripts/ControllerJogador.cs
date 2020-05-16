@@ -32,28 +32,17 @@ public class ControllerJogador : MonoBehaviour
 
     void Update()
     {
-        /* Cria um raio que segue aonde o mouse ta */
-        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(raio.origin, raio.direction, Color.red);
-
-        /* Guarda aonde o raio toca */
-        // RaycastHit impacto;
-        RaycastHit impacto;
-
-        if (Physics.Raycast(raio, out impacto, 100, MascaraChao))
-        {
-            olharNaPosicao = impacto.point;
-        }
-
-        Vector3 olharNaDirecao = olharNaPosicao - transform.position;
-        olharNaDirecao.y = 0;
-
-        transform.LookAt(transform.position + olharNaDirecao, Vector3.up);
-
+        HandleRotatationInput();
     }
 
     /* FixedUpdate roda em um tempo fixo e nao em todo frame do jogo como o Update*/
     void FixedUpdate()
+    {
+        HandleMovementInput();
+        HandleShootInput();
+    }
+
+    void HandleMovementInput()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -79,6 +68,36 @@ public class ControllerJogador : MonoBehaviour
         movimento.Normalize();
 
         rigidBody.AddForce(movimento * Velocidade / Time.deltaTime);
+        // transform.Translate(movimento * Velocidade / Time.deltaTime, Space.World);
+    }
+
+    void HandleRotatationInput()
+    {
+        /* Cria um raio que segue aonde o mouse ta */
+        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(raio.origin, raio.direction, Color.red);
+
+        /* Guarda aonde o raio toca */
+        // RaycastHit impacto;
+        RaycastHit impacto;
+
+        if (Physics.Raycast(raio, out impacto, 100, MascaraChao))
+        {
+            olharNaPosicao = impacto.point;
+        }
+
+        Vector3 olharNaDirecao = olharNaPosicao - transform.position;
+        olharNaDirecao.y = 0;
+
+        transform.LookAt(transform.position + olharNaDirecao, Vector3.up);
+    }
+
+    void HandleShootInput()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            ControllerArma.Instance.SpawnVFX();
+        }
     }
 
     void Move(Vector3 move)

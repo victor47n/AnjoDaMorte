@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class MoveProjetil : MonoBehaviour
 {
-    
+
     public float speed;
     public float fireRate;
     public GameObject muzzlePrefab;
     public GameObject hitPrefab;
 
+    private Vector3 firingPoint;
+    [SerializeField]
+    private float maxProjectileDistance = 0;
+
     void Start()
     {
+        firingPoint = transform.position;
+
         if (muzzlePrefab != null)
         {
             var muzzleVFX = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
@@ -22,7 +28,8 @@ public class MoveProjetil : MonoBehaviour
             {
                 Destroy(muzzleVFX, psMuzzle.main.duration);
             }
-            else {
+            else
+            {
                 var psChild = muzzleVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
                 Destroy(muzzleVFX, psChild.main.duration);
             }
@@ -31,16 +38,25 @@ public class MoveProjetil : MonoBehaviour
 
     void Update()
     {
-        if (speed != 0)
+        if (Vector3.Distance(firingPoint, transform.position) > maxProjectileDistance)
         {
-            transform.position += transform.forward * (speed * Time.deltaTime);
+            Destroy(this.gameObject);
         }
-        else {
-            Debug.Log("Sem velocidade");
+        else
+        {
+            if (speed != 0)
+            {
+                transform.Translate(Vector3.forward * speed * Time.deltaTime);
+                // transform.position += transform.forward * (speed * Time.deltaTime);
+            }
+            else
+            {
+                Debug.Log("Sem velocidade");
+            }
         }
     }
 
-    void OnCollisionEnter (Collision co)
+    void OnCollisionEnter(Collision co)
     {
         speed = 0;
 
@@ -58,7 +74,8 @@ public class MoveProjetil : MonoBehaviour
             {
                 Destroy(hitVFX, psHit.main.duration);
             }
-            else {
+            else
+            {
                 var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
                 Destroy(hitVFX, psChild.main.duration);
             }
