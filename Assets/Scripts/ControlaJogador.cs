@@ -17,6 +17,7 @@ public class ControlaJogador : MonoBehaviour
     void Update()
     {
         Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(raio.origin, raio.direction, Color.red);
 
         RaycastHit impacto;
 

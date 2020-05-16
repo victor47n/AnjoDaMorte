@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bala : MonoBehaviour
 {
     public float Velocidade = 10;
-    public GameObject Jogador;
+    // public GameObject Jogador;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -25,7 +25,7 @@ public class Bala : MonoBehaviour
         if(objetoDeColisao.tag == "Player")
         {
             Time.timeScale = 0;
-            Jogador.GetComponent<ControllerJogador>().TextoGameOver.SetActive(true);
+            // Jogador.GetComponent<ControllerJogador>().TextoGameOver.SetActive(true);
         }
 
         Destroy(gameObject);

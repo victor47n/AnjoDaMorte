@@ -34,6 +34,7 @@ public class ControllerJogador : MonoBehaviour
     {
         /* Cria um raio que segue aonde o mouse ta */
         Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(raio.origin, raio.direction, Color.red);
 
         /* Guarda aonde o raio toca */
         // RaycastHit impacto;
