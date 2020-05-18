@@ -35,3 +35,6 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Drops de armas | X |  |  |
 | Contagem de inimigos | X |  |  |
 | Menu pause | X |  |  |
+| Barra de vida | X |  |  |
+| Tomas dano | X |  |  |
+| Artes (Tela pause, fim de jogo, inicio de fase, etc.) | X |  |  |
