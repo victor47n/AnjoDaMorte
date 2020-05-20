@@ -59,17 +59,12 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
             HandleTurnPlayer();
             HandleReticle();
+            
         }
     }
 
     protected virtual void HandleMovement()
     {
-        // Vector3 wantedPosition = transform.position + (transform.forward * input.FowardInput * playerSpeed * Time.deltaTime);
-        // rigidBody.MovePosition(wantedPosition);
-
-        // Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * (input.RotationInput * playerRotationSpeed * Time.deltaTime));
-        // rigidBody.MoveRotation(wantedRotation);
-
         Vector3 wantedPosition = new Vector3(transform.forward.x, 0, transform.forward.z) * input.FowardInput;
         Vector3 wantedRotation = new Vector3(transform.right.x, 0, transform.right.z) * input.RotationInput;
 
@@ -80,13 +75,13 @@ public class PlayerController : MonoBehaviour
             finalDirection.Normalize();
         }
 
+        /* Animation Player */
         move = finalDirection;
         Move(move);
 
+        /* Move Player */
         Vector3 moviment = finalDirection * playerSpeed * Time.deltaTime;
         rigidBody.MovePosition(transform.position + moviment);
-
-
     }
 
     protected virtual void HandleTurnPlayer()
@@ -97,7 +92,6 @@ public class PlayerController : MonoBehaviour
             turnPlayerLookDir.y = 0f;
 
             finalTurnPlayerLookDir = Vector3.Lerp(finalTurnPlayerLookDir, turnPlayerLookDir, Time.deltaTime * turnPlayerLagSpeed);
-            Debug.Log(finalTurnPlayerLookDir);
             turnPlayerTransform.rotation = Quaternion.LookRotation(finalTurnPlayerLookDir);
         }
     }

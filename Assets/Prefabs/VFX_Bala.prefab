@@ -182,10 +182,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5004054726568176804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 228682e1b59e13440837b65d6f5c79fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 466136eb48d7bc54a8696d540e35725c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 20
   fireRate: 4
   muzzlePrefab: {fileID: 6040461193964505798, guid: c17b6289574a1154b8ce7673aabb27be,
     type: 3}

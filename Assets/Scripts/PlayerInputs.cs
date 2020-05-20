@@ -49,7 +49,7 @@ public class PlayerInputs : MonoBehaviour
     {
         Ray screenRay = myCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
+
         if (Physics.Raycast(screenRay, out hit ))
         {
             reticlePosition = hit.point;
