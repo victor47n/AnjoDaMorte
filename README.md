@@ -27,7 +27,9 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Cenário 3 |  | X |  |
 | Animação personagem |  | X |  |
 | Projetil |  |  | X |
-| Disparos de armas |  | X |  |
+| Camera |  |  | X |
+| Mira |  | X |  |
+| Disparos de armas |  |  | X |
 | Spawn de inimigos | X |  |  |
 | Randomização de cenário | X |  |  |
 | Menu iniciar | X |  |  |
