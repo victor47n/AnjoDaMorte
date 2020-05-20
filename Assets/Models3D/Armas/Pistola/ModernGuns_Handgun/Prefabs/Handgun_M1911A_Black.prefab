@@ -469,7 +469,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4235179229403270}
-  - component: {fileID: 1681697584}
+  - component: {fileID: 4311057652912786017}
+  - component: {fileID: 1397423055}
   m_Layer: 0
   m_Name: Handgun_M1911A_Black
   m_TagString: Untagged
@@ -493,7 +494,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1681697584
+--- !u!114 &4311057652912786017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -502,10 +503,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1810581554106536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bee41a37fbd7294798ea5bc0b58dd2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f7bf8e351681da49907232815d9d228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanoDaArma: {fileID: 1762746446689110}
+  shootingPoint:
+  - {fileID: 1762746446689110}
   vfx:
   - {fileID: 5004054726568176804, guid: 27bf56f833d64d046b8af33525e82c8d, type: 3}
   firingSpeed: 0.2
+  fireMode: 2
+  burstCount: 3
+--- !u!114 &1397423055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810581554106536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61da89790332a6047a96d621f7a62b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corLaser: {r: 0.9528302, g: 0.04045032, b: 0.04045032, a: 0.68235296}
+  DistanciaDoLaser: 4
+  LarguraInicial: 0.009
+  LarguraFinal: 0.009

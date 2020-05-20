@@ -13,6 +13,7 @@ public class ControllerJogador : MonoBehaviour
     Vector3 olharNaPosicao;
     public LayerMask MascaraChao;
     public GameObject TextoGameOver;
+    GunController gunController;
 
     Transform cam;
     Vector3 camForward;
@@ -26,6 +27,7 @@ public class ControllerJogador : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         SetupAnimator();
+        gunController = GetComponent<GunController>();
 
         cam = Camera.main.transform;
     }
@@ -33,13 +35,23 @@ public class ControllerJogador : MonoBehaviour
     void Update()
     {
         HandleRotatationInput();
+
+        // Weapon input
+        if (Input.GetButton("Fire1"))
+        {
+            gunController.OnTriggerHold();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            gunController.OnTriggerRelease();
+        }
     }
 
     /* FixedUpdate roda em um tempo fixo e nao em todo frame do jogo como o Update*/
     void FixedUpdate()
     {
         HandleMovementInput();
-        HandleShootInput();
+        // HandleShootInput();
     }
 
     void HandleMovementInput()
@@ -92,13 +104,18 @@ public class ControllerJogador : MonoBehaviour
         transform.LookAt(transform.position + olharNaDirecao, Vector3.up);
     }
 
-    void HandleShootInput()
-    {
-        if (Input.GetButton("Fire1"))
-        {
-            ControllerArma.Instance.SpawnVFX();
-        }
-    }
+    // void HandleShootInput()
+    // {
+    //     if (Input.GetButton("Fire1"))
+    //     {
+    //         ControllerArma.Instance.OnTriggerHold();
+    //     }
+
+    //     if (Input.GetButtonUp("Fire1"))
+    //     {
+    //         ControllerArma.Instance.OnTriggerRelease();
+    //     }
+    // }
 
     void Move(Vector3 move)
     {
