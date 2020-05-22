@@ -43,14 +43,14 @@ public class ControllerInimigo : MonoBehaviour
 
             GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + direcao.normalized * Velocidade * Time.deltaTime);
             /* Posiciona as balas na altura certa */
-            // Instantiate(Bala, CanoDaArma.transform.position, CanoDaArma.transform.rotation);
+            Instantiate(Bala, CanoDaArma.transform.position, CanoDaArma.transform.rotation);
 
         }
         else
         {
             GetComponent<Animator>().SetBool("Movendo", false);
             /* Posiciona as balas na altura certa */
-            // Instantiate(Bala, CanoDaArma.transform.position, CanoDaArma.transform.rotation);
+            Instantiate(Bala, CanoDaArma.transform.position, CanoDaArma.transform.rotation);
         }
     }
 }
