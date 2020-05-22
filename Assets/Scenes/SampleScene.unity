@@ -243,7 +243,7 @@ RectTransform:
   m_Children:
   - {fileID: 1112567664}
   m_Father: {fileID: 2014830188}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHold: {fileID: 83005517}
-  startingGun: {fileID: 1086562300910646192, guid: 5d35466c7ff8f05439ceb0b92ebe5318,
+  startingGun: {fileID: 3265014282091407942, guid: bd9df30931ebd974e860f1518f80e679,
     type: 3}
 --- !u!114 &1162564441
 MonoBehaviour:
@@ -863,7 +863,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d80c5450d3ed78c4cad6cc8b43a6d449,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d80c5450d3ed78c4cad6cc8b43a6d449,
         type: 3}
@@ -1044,9 +1044,9 @@ Transform:
   - {fileID: 197240655}
   - {fileID: 963194228}
   - {fileID: 705507995}
+  - {fileID: 114559604}
   - {fileID: 5006512736261393033}
   - {fileID: 1121424343}
-  - {fileID: 114559604}
   - {fileID: 960435487}
   - {fileID: 1162564445}
   m_Father: {fileID: 0}
