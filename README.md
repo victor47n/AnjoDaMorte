@@ -3,7 +3,7 @@ Um jogo criado para passar de ano
 
 # VERSÃO DO UNITY
 
-**2019.3.13f1**
+**2019.3.14f1**
 
 # BRANCHES
 
