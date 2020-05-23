@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInputs))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : LivingEntity
 {
     [Header("Movement Properties")]
     public float playerSpeed = 15f;
@@ -31,8 +31,9 @@ public class PlayerController : MonoBehaviour
     private float forwardAmount;
     private float turnAmount;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         rigidBody = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInputs>();
         gunController = GetComponent<GunController>();
