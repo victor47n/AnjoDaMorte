@@ -20,23 +20,47 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 
 # TAREFAS
 
+## Tarefas Player
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
-| Cenário 1 |  | X |  |
-| Cenário 2 |  | X |  |
-| Cenário 3 |  | X |  |
-| Animação personagem |  | X |  |
-| Projetil |  |  | X |
+| Animação de movimentação |  |  | X |
+| Animação de morte | X |  |  |
+| Atirar |  |  | X |
+| Pegar armas do chão | X |  |  |
+| Tomar dano |  | X |  |
 | Camera |  |  | X |
-| Mira |  | X |  |
-| Disparos de armas |  |  | X |
-| Spawn de inimigos | X |  |  |
-| Randomização de cenário | X |  |  |
+| Crosshair |  | X |  |
+
+## Tarefas Inimigos
+| Tarefa | Não iniciada | Em processo | Finalizada |
+|--|--|--|--|
+| Animação de movimentação |  | X |  |
+| Animação de morte | X |  |  |
+| Spawn de inimigos |  | X |  |
+| Atirar |  | X |  |
+| Dropar armas no chão | X |  |  |
+| Tomar dano |  |  | X |
+
+## Tarefas Cenários
+| Tarefa | Não iniciada | Em processo | Finalizada |
+|--|--|--|--|
+| Cenário base 1 |  | X |  |
+| Cenário base 2 |  | X |  |
+| Cenário base 3 |  | X |  |
+| Randomização de cenários | X |  |  | 
+| Mudança de fases | X |  |  |
+
+## Tarefas HUD
+| Tarefa | Não iniciada | Em processo | Finalizada |
+|--|--|--|--|
+| Contagem de inimigos | X |  |  |
 | Menu iniciar | X |  |  |
 | Menu pause | X |  |  |
-| Drops de armas | X |  |  |
-| Contagem de inimigos | X |  |  |
-| Menu pause | X |  |  |
 | Barra de vida | X |  |  |
-| Tomas dano | X |  |  |
 | Artes (Tela pause, fim de jogo, inicio de fase, etc.) | X |  |  |
+
+## Tarefas Armas
+| Tarefa | Não iniciada | Em processo | Finalizada |
+|--|--|--|--|
+| Disparar |  |  | X |
+| Acabar e recarregar munição | X |  |  |
