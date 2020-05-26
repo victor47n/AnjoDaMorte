@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: bdd33e7f0643bb64ab20ce5d5b27a58f
+guid: 719cac1a98b22de4185e67b94a218d45
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Firing Rifle
+    second: Firing Rifle Run
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Firing Rifle
+      name: Firing Rifle Run
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 9
+      lastFrame: 21
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

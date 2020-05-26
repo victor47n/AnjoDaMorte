@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: bdd33e7f0643bb64ab20ce5d5b27a58f
+guid: 718889fc1deaef7489046145c9ef7848
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Firing Rifle
+    second: Rifle Run To Dying
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,18 +35,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Firing Rifle
+      name: Rifle Run To Dying
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 9
+      lastFrame: 93
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
