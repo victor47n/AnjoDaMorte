@@ -46,7 +46,6 @@ public class Gun : MonoBehaviour
                 }
             }
 
-            // timeToFire = Time.time + 1 / effectToSpawn.GetComponent<MoveProjetil>().fireRate;
             for (int i = 0; i < shootingPoint.Count; i++)
             {
                 timeToFire = Time.time;

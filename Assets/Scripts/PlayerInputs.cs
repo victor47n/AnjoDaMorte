@@ -6,6 +6,7 @@ public class PlayerInputs : MonoBehaviour
 {
     [Header("Input Properties")]
     public Camera myCamera;
+    public LayerMask terrain;
 
     private Vector3 reticlePosition;
     public Vector3 ReticlePosition
@@ -31,6 +32,12 @@ public class PlayerInputs : MonoBehaviour
         get { return rotationInput; }
     }
 
+    private Ray screenRay;
+    public Ray ScreenRay
+    {
+        get { return screenRay; }
+    }
+
     void Update()
     {
         if (myCamera)
@@ -47,10 +54,10 @@ public class PlayerInputs : MonoBehaviour
 
     protected virtual void HandleInputs()
     {
-        Ray screenRay = myCamera.ScreenPointToRay(Input.mousePosition);
+        screenRay = myCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(screenRay, out hit ))
+        if (Physics.Raycast(screenRay, out hit, terrain))
         {
             reticlePosition = hit.point;
             reticleNormal = hit.normal;

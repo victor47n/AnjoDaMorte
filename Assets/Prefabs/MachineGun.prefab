@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3949745064207592685}
   - component: {fileID: 3265014282091407942}
   m_Layer: 0
-  m_Name: machine_gun_4
+  m_Name: MachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5029213350316718575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.3386588, y: 1.4174769, z: 1.5399559}
-  m_LocalScale: {x: 0.19, y: 0.19, z: 0.19}
+  m_LocalPosition: {x: -12.187308, y: -1.00632835e-16, z: 27.1926}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 804501203385676919}
   m_Father: {fileID: 0}

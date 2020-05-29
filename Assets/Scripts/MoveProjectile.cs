@@ -9,6 +9,7 @@ public class MoveProjectile : MonoBehaviour
     public float fireRate;
     public GameObject muzzlePrefab;
     public GameObject hitPrefab;
+    float damage = 1;
 
     private Vector3 firingPoint;
     [SerializeField]
@@ -47,7 +48,6 @@ public class MoveProjectile : MonoBehaviour
             if (speed != 0)
             {
                 transform.Translate(Vector3.forward * speed * Time.deltaTime);
-                // transform.position += transform.forward * (speed * Time.deltaTime);
             }
             else
             {
@@ -72,10 +72,21 @@ public class MoveProjectile : MonoBehaviour
 
             if (psHit != null)
             {
+                IDamageable damageableObject = co.collider.GetComponent<IDamageable>();
+                if (damageableObject != null)
+                {
+                    damageableObject.TakeHit(damage, co);
+                }
                 Destroy(hitVFX, psHit.main.duration);
             }
             else
             {
+                IDamageable damageableObject = co.collider.GetComponent<IDamageable>();
+                if (damageableObject != null)
+                {
+                    damageableObject.TakeHit(damage, co);
+                }
+
                 var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
                 Destroy(hitVFX, psChild.main.duration);
             }
