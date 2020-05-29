@@ -48,7 +48,6 @@ public class MoveProjectile : MonoBehaviour
             if (speed != 0)
             {
                 transform.Translate(Vector3.forward * speed * Time.deltaTime);
-                // transform.position += transform.forward * (speed * Time.deltaTime);
             }
             else
             {

@@ -15,7 +15,7 @@ public class PlayerController : LivingEntity
     public float turnPlayerLagSpeed = 0.5f;
 
     [Header("Reticle Properties")]
-    public Transform reticleTransform;
+    public Crosshair reticleTransform;
 
     private Rigidbody rigidBody;
     private PlayerInputs input;
@@ -101,7 +101,8 @@ public class PlayerController : LivingEntity
     {
         if (reticleTransform)
         {
-            reticleTransform.position = input.ReticlePosition;
+            reticleTransform.transform.position = input.ReticlePosition;
+            reticleTransform.DetectTargets(input.ScreenRay);
         }
     }
 

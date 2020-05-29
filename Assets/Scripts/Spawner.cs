@@ -9,6 +9,11 @@ public class Spawner : MonoBehaviour
     public List<EnemyController> enemy = new List<EnemyController>();
     private int noiseValues;
 
+    public LayerMask EnemyLayer;
+    private float distanceGeneration = 3;
+    private float distancePlayerForGeneration = 20;
+    private GameObject player;
+
     Wave currentWave;
     int currentWaveNumber;
 
@@ -17,25 +22,60 @@ public class Spawner : MonoBehaviour
     float nextSpawnTime;
 
     void Start()
-    {      
+    {
         NextWave();
+        player = GameObject.FindWithTag("Player");
     }
 
     void Update()
     {
 
-            noiseValues = UnityEngine.Random.Range(0, 3);
-
-        if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
+        if (player != null)
         {
-            enemiesRemainingToSpawn--;
-            nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
-            Debug.Log(noiseValues);
-
-            EnemyController spawnedEnemy = Instantiate(enemy[0], new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity) as EnemyController;
-            spawnedEnemy.transform.parent = GameObject.Find("Scene").transform;
-            spawnedEnemy.OnDeath += OnEnemyDeath;
+            if (Vector3.Distance(transform.position, player.transform.position) > distancePlayerForGeneration)
+            {
+                if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
+                {
+                    StartCoroutine(GenerateNewEnemy());
+                }
+            }
         }
+    }
+
+    int RandomEnemy()
+    {
+        return UnityEngine.Random.Range(0, 3);
+    }
+
+    Vector3 RandomPositionEnemy()
+    {
+        Vector3 position = UnityEngine.Random.insideUnitSphere * distanceGeneration;
+        position += transform.position;
+        position.y = 0;
+
+        return position;
+    }
+
+    IEnumerator GenerateNewEnemy()
+    {
+        noiseValues = RandomEnemy();
+
+        Vector3 positionGenerate = RandomPositionEnemy();
+        Collider[] colisions = Physics.OverlapSphere(positionGenerate, 1, EnemyLayer);
+
+        while (colisions.Length > 0)
+        {
+            positionGenerate = RandomPositionEnemy();
+            colisions = Physics.OverlapSphere(positionGenerate, 1, EnemyLayer);
+            yield return null;
+        }
+
+        enemiesRemainingToSpawn--;
+        nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
+
+        EnemyController spawnedEnemy = Instantiate(enemy[noiseValues], positionGenerate, Quaternion.identity) as EnemyController;
+        spawnedEnemy.transform.parent = GameObject.Find("Scene").transform;
+        spawnedEnemy.OnDeath += OnEnemyDeath;
     }
 
     void OnEnemyDeath()
@@ -65,5 +105,11 @@ public class Spawner : MonoBehaviour
     {
         public int enemyCount;
         public float timeBetweenSpawns;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, distanceGeneration);
     }
 }

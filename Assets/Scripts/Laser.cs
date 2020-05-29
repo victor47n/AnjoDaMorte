@@ -19,11 +19,7 @@ public class Laser : MonoBehaviour
         luzColisao.GetComponent<Light>().bounceIntensity = 8;
         luzColisao.GetComponent<Light>().range = LarguraFinal * 2;
         luzColisao.GetComponent<Light>().color = corLaser;
-        //
-        // LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Additive"));
-        // lineRenderer.SetColors(corLaser, corLaser);
-        // lineRenderer.SetWidth(LarguraInicial, LarguraFinal);
         lineRenderer.startWidth = LarguraInicial;
         lineRenderer.endWidth = LarguraFinal;
         lineRenderer.startColor = corLaser;
