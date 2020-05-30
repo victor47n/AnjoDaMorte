@@ -24,7 +24,7 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
 | Animação de movimentação |  |  | X |
-| Animação de morte | X |  |  |
+| Animação de morte |  |  | X |
 | Atirar |  |  | X |
 | Pegar armas do chão | X |  |  |
 | Tomar dano |  |  | X |
@@ -35,7 +35,7 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
 | Animação de movimentação |  |  | X |
-| Animação de morte | X |  |  |
+| Animação de morte |  |  | X |
 | Spawn de inimigos |  |  | X |
 | Atirar |  |  | X |
 | Dropar armas no chão | X |  |  |
