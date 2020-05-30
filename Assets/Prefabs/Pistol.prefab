@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingPoint:
-  - {fileID: 9119913224193750681}
+  - {fileID: 2058403125692923348}
   vfx:
   - {fileID: 5004054726568176804, guid: 27bf56f833d64d046b8af33525e82c8d, type: 3}
   firingSpeed: 0.5

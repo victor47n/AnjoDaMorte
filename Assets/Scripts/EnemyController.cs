@@ -13,6 +13,8 @@ public class EnemyController : LivingEntity
     Transform target;
     float distance;
     private Vector3 finalTurnEnemyLookDir;
+    Rigidbody enemyRigidbody;
+    public GameObject VFXBloodParticle;
 
     float timeBetweenAttacks = 1;
     Transform enemyShotgun;
@@ -36,6 +38,7 @@ public class EnemyController : LivingEntity
         pathfinder = GetComponent<NavMeshAgent>();
         gunController = GetComponent<GunController>();
         animationEnemy = GetComponent<Animator>();
+        enemyRigidbody = GetComponent<Rigidbody>();
 
         if (GameObject.FindGameObjectWithTag("EnemyShotgun") != null)
         {
@@ -63,6 +66,15 @@ public class EnemyController : LivingEntity
         StartCoroutine(UpdatePath());
     }
 
+    public override void TakeHit(float damage, Collision hit)
+    {
+        if (damage >= health)
+        {
+            Dead();
+        }
+        base.TakeHit(damage, hit);
+    }
+
     void Update()
     {
         if (target != null)
@@ -77,6 +89,21 @@ public class EnemyController : LivingEntity
                 StartCoroutine(Attack());
             }
         }
+    }
+
+    public override void BloodParticle(Vector3 pos, Quaternion rot)
+    {
+        Instantiate(VFXBloodParticle, pos, rot);
+    }
+
+    void Dead()
+    {
+        animationEnemy.SetTrigger("Death");
+        this.enabled = false;
+        enemyRigidbody.constraints = RigidbodyConstraints.None;
+        enemyRigidbody.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+        pathfinder.enabled = false;
     }
 
     IEnumerator Attack()
@@ -249,9 +276,12 @@ public class EnemyController : LivingEntity
 
             if (currentState == State.Idle)
             {
-                pathfinder.enabled = false;
-                UpdateAnimator(distance);
-                animationEnemy.SetBool("Firing", false);
+                if (!dead)
+                {
+                    pathfinder.enabled = false;
+                    UpdateAnimator(distance);
+                    animationEnemy.SetBool("Firing", false);
+                }
             }
 
             if (currentState == State.Chasing)
