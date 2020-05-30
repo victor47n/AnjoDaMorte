@@ -15,7 +15,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
         health = startingHealth;
     }
 
-    public void TakeHit(float damage, Collision hit)
+    public virtual void TakeHit(float damage, Collision hit)
+    {
+        TakeDamage(damage);
+    }
+
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
 
@@ -25,6 +30,12 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
+    public virtual void BloodParticle(Vector3 pos, Quaternion rot)
+    {
+        
+    }
+
+    [ContextMenu("Self Destruct")]
     protected void Die()
     {
         dead = true;
@@ -32,6 +43,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             OnDeath();
         }
-        GameObject.Destroy(gameObject);
+        GameObject.Destroy(gameObject, 4);
     }
 }

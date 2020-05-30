@@ -17,12 +17,16 @@ public class PlayerController : LivingEntity
     [Header("Reticle Properties")]
     public Crosshair reticleTransform;
 
+    [Header("Particle Blood")]
+    public GameObject VFXBloodParticle;
+
     private Rigidbody rigidBody;
     private PlayerInputs input;
     private Vector3 finalTurnPlayerLookDir;
 
     /* Gun variable */
     GunController gunController;
+    string weapon;
 
     /* Animation Variables */
     private Animator animationPlayer;
@@ -38,6 +42,18 @@ public class PlayerController : LivingEntity
         input = GetComponent<PlayerInputs>();
         gunController = GetComponent<GunController>();
         SetupAnimator();
+
+        weapon = gunController.equippedGun.ToString();
+
+        if (weapon == "MachineGun(Clone) (Gun)" || weapon == "Shotgun(Clone) (Gun)")
+        {
+            animationPlayer.SetBool("Rifle", true);
+            animationPlayer.SetBool("Pistol", false);
+        }
+        else{
+            animationPlayer.SetBool("Pistol", true);
+            animationPlayer.SetBool("Rifle", false);
+        }
     }
 
     void Update()
@@ -145,5 +161,28 @@ public class PlayerController : LivingEntity
                 break;
             }
         }
+    }
+
+    public override void TakeHit(float damage, Collision hit)
+    {
+        if (damage >= health)
+        {
+            Dead();
+        }
+        base.TakeHit(damage, hit);
+    }
+
+    void Dead()
+    {
+        animationPlayer.SetTrigger("Death");
+        this.enabled = false;
+        rigidBody.constraints = RigidbodyConstraints.None;
+        rigidBody.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+    }
+
+    public override void BloodParticle(Vector3 pos, Quaternion rot)
+    {
+        Instantiate(VFXBloodParticle, pos, rot);
     }
 }

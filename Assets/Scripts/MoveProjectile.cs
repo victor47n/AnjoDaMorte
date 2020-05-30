@@ -76,6 +76,7 @@ public class MoveProjectile : MonoBehaviour
                 if (damageableObject != null)
                 {
                     damageableObject.TakeHit(damage, co);
+                    damageableObject.BloodParticle(pos, rot);
                 }
                 Destroy(hitVFX, psHit.main.duration);
             }
@@ -85,6 +86,7 @@ public class MoveProjectile : MonoBehaviour
                 if (damageableObject != null)
                 {
                     damageableObject.TakeHit(damage, co);
+                    damageableObject.BloodParticle(pos, rot);
                 }
 
                 var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();

@@ -14,6 +14,7 @@ public class Laser : MonoBehaviour
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer = GetComponent<LineRenderer>();
         luzColisao = new GameObject();
+        luzColisao.transform.parent = GameObject.Find("Flashlight").transform;
         luzColisao.AddComponent<Light>();
         luzColisao.GetComponent<Light>().intensity = 8;
         luzColisao.GetComponent<Light>().bounceIntensity = 8;
@@ -36,13 +37,19 @@ public class Laser : MonoBehaviour
             GetComponent<LineRenderer>().SetPosition(0, transform.position);
             GetComponent<LineRenderer>().SetPosition(1, PontoDeColisao.point);
             float distancia = Vector3.Distance(transform.position, PontoDeColisao.point) - 0.03f;
-            luzColisao.transform.position = transform.position + transform.forward * distancia;
+            if (luzColisao != null)
+            {
+                luzColisao.transform.position = transform.position + transform.forward * distancia;
+            }
         }
         else
         {
             GetComponent<LineRenderer>().SetPosition(0, transform.position);
             GetComponent<LineRenderer>().SetPosition(1, PontoFinalDoLaser);
-            luzColisao.transform.position = PontoFinalDoLaser;
+            if (luzColisao != null)
+            {
+                luzColisao.transform.position = PontoFinalDoLaser;
+            }
         }
     }
 }

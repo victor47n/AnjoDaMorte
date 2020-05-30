@@ -243,13 +243,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83005516}
-  m_LocalRotation: {x: -0.58964634, y: 0.55338746, z: 0.39027846, w: 0.44018438}
-  m_LocalPosition: {x: 0.01, y: 0, z: 0.04}
+  m_LocalRotation: {x: -0.5367589, y: 0.59941494, z: 0.37518284, w: 0.46024948}
+  m_LocalPosition: {x: 0.0090684565, y: -0.009520475, z: 0.022365768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1853006513}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -108, y: -5, z: 90}
+  m_LocalEulerAnglesHint: {x: -109.288994, y: -26.810974, z: 115.508995}
 --- !u!1 &114559600
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +493,7 @@ PrefabInstance:
     - target: {fileID: 8137452194112532931, guid: 627b15d948d9a0046abb9b4b9acecfb6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8137452194112532931, guid: 627b15d948d9a0046abb9b4b9acecfb6,
         type: 3}
@@ -1003,8 +1003,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHold: {fileID: 83005517}
-  startingGun: {fileID: 3265014282091407942, guid: bd9df30931ebd974e860f1518f80e679,
+  startingGun: {fileID: -7697905371939586451, guid: 616e2d40dab08e54bbaea4022880c05e,
     type: 3}
+  equippedGun: {fileID: 0}
 --- !u!114 &1162564441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,12 +1018,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133507391ff727f4bbc029fc82d49252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 1
   playerSpeed: 4
   playerRotationSpeed: 4
   turnPlayerTransform: {fileID: 1162564445}
   turnPlayerLagSpeed: 8
   reticleTransform: {fileID: 656865286}
+  VFXBloodParticle: {fileID: 3009756142894992707, guid: 78a0c0b226404294eade845e9a9c8228,
+    type: 3}
 --- !u!114 &1162564442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,7 +1056,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!4 &1162564445 stripped
 Transform:
@@ -1287,7 +1290,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d80c5450d3ed78c4cad6cc8b43a6d449,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d80c5450d3ed78c4cad6cc8b43a6d449,
         type: 3}
@@ -1366,7 +1369,7 @@ PrefabInstance:
     - target: {fileID: 8137452194112532931, guid: 627b15d948d9a0046abb9b4b9acecfb6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8137452194112532931, guid: 627b15d948d9a0046abb9b4b9acecfb6,
         type: 3}
@@ -1574,7 +1577,7 @@ PrefabInstance:
     - target: {fileID: 8137452194112532931, guid: 627b15d948d9a0046abb9b4b9acecfb6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8137452194112532931, guid: 627b15d948d9a0046abb9b4b9acecfb6,
         type: 3}
