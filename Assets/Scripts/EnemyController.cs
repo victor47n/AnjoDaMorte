@@ -71,6 +71,7 @@ public class EnemyController : LivingEntity
         if (damage >= health)
         {
             Dead();
+            GenerateWeapon(gunController.equippedGun);
         }
         base.TakeHit(damage, hit);
     }
@@ -104,6 +105,12 @@ public class EnemyController : LivingEntity
         enemyRigidbody.velocity = Vector3.zero;
         GetComponent<Collider>().enabled = false;
         pathfinder.enabled = false;
+    }
+
+    void GenerateWeapon(Gun dropweapon)
+    {
+        Debug.Log(dropweapon);
+        Instantiate(dropweapon, transform.position, Quaternion.identity);
     }
 
     IEnumerator Attack()

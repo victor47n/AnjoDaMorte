@@ -74,4 +74,13 @@ public class Gun : MonoBehaviour
         triggerReleasedSinceLastShot = true;
         shotsRemainingInBurst = burstCount;
     }
+
+    public void Test(Collider co)
+    {
+        if (co.tag == "Player")
+        {
+            co.GetComponent<PlayerController>().PickUp(gameObject.GetComponent<Gun>());
+            Destroy(gameObject);
+        }
+    }
 }
