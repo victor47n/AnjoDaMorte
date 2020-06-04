@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
     int enemiesRemainingAlive;
     float nextSpawnTime;
 
+
     void Start()
     {
         NextWave();
@@ -76,6 +77,7 @@ public class Spawner : MonoBehaviour
         EnemyController spawnedEnemy = Instantiate(enemy[noiseValues], positionGenerate, Quaternion.identity) as EnemyController;
         spawnedEnemy.transform.parent = GameObject.Find("Scene").transform;
         spawnedEnemy.OnDeath += OnEnemyDeath;
+        UI.IncreaseEnemyLives();
     }
 
     void OnEnemyDeath()
