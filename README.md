@@ -58,6 +58,7 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Menu pause | X |  |  |
 | Barra de vida | X |  |  |
 | Artes (Tela pause, fim de jogo, inicio de fase, etc.) | X |  |  |
+| Tela de carregamento | | | X |
 
 ## Tarefas Armas
 | Tarefa | Não iniciada | Em processo | Finalizada |
