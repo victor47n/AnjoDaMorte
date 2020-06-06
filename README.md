@@ -53,7 +53,7 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 ## Tarefas HUD
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
-| Contagem de inimigos | X |  |  |
+| Contagem de inimigos |  | X |  |
 | Menu iniciar | X |  |  |
 | Menu pause | X |  |  |
 | Barra de vida | X |  |  |
