@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Inimigo
   - EnemyShotgun
+  - Weapon
   layers:
   - Default
   - TransparentFX

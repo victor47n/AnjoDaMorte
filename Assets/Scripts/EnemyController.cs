@@ -71,6 +71,7 @@ public class EnemyController : LivingEntity
         if (damage >= health)
         {
             Dead();
+            GenerateWeapon(gunController.equippedGun);
         }
         base.TakeHit(damage, hit);
     }
@@ -104,6 +105,27 @@ public class EnemyController : LivingEntity
         enemyRigidbody.velocity = Vector3.zero;
         GetComponent<Collider>().enabled = false;
         pathfinder.enabled = false;
+    }
+
+    void GenerateWeapon(Gun dropWeapon)
+    {
+        dropWeapon.name = dropWeapon.name.Replace("(Clone)", "");
+        // Debug.Log(dropWeapon.GetType());
+        Instantiate(dropWeapon, new Vector3(transform.position.x, 1, transform.position.z), transform.rotation);
+        // Debug.Log(weapon.GetType());
+        // seila.GetComponent<Animation>().Play("WeaponDropped");
+        // seila.GetComponent<Light>().enabled = true;
+        // seila.GetComponent<Animation>().
+        // Debug.Log(seila.GetComponent<Gun>());
+        // seila.GetComponent<Light>().enabled = true;
+        // seila.GetComponent<Gun>().Luz(seila);
+
+        // Debug.Log(seila.GetComponent<Light>().enabled);
+        // seila.Luz(seila);
+        // seila.gameObject.GetComponent<Light>().enabled = true;
+        // seila.GetComponent<Gun>().AnimationDrop(seila, 1);
+
+        // dropWeapon.GetComponent<Gun>().Animation(dropWeapon);
     }
 
     IEnumerator Attack()

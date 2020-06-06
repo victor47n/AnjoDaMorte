@@ -8,10 +8,14 @@ public class Laser : MonoBehaviour
     public int DistanciaDoLaser = 100;
     public float LarguraInicial = 0.02f, LarguraFinal = 0.1f;
     private GameObject luzColisao;
+    LineRenderer lineRenderer;
 
     void Start()
     {
-        LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+        if (gameObject.GetComponent<LineRenderer>() == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
         lineRenderer = GetComponent<LineRenderer>();
         luzColisao = new GameObject();
         luzColisao.transform.parent = GameObject.Find("Flashlight").transform;
