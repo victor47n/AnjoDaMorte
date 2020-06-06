@@ -9,6 +9,7 @@ public class PlayerController : LivingEntity, IPickUp
     [Header("Movement Properties")]
     public float playerSpeed = 15f;
     public float playerRotationSpeed = 20f;
+    private PlayerController playerController;
 
     [Header("Turn Player Properties")]
     public Transform turnPlayerTransform;
@@ -27,7 +28,6 @@ public class PlayerController : LivingEntity, IPickUp
     /* Gun variable */
     GunController gunController;
     string weapon;
-    string weaponTag = "Weapon";
 
     /* Animation Variables */
     private Animator animationPlayer;
@@ -43,23 +43,24 @@ public class PlayerController : LivingEntity, IPickUp
         base.Start();
         rigidBody = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInputs>();
+        playerController = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
         SetupAnimator();
-        // Debug.Log(gunController.equippedGun.GetComponent<Gun>());
 
         weapon = gunController.equippedGun.ToString();
-        Debug.Log(weapon);
 
         if (weapon == "MachineGun(Clone) (Gun)" || weapon == "Shotgun(Clone) (Gun)")
         {
             animationPlayer.SetBool("Rifle", true);
             animationPlayer.SetBool("Pistol", false);
+            playerController.playerSpeed = 5;
         }
         else
         {
             Debug.Log("entrou aqui");
             animationPlayer.SetBool("Pistol", true);
             animationPlayer.SetBool("Rifle", false);
+            playerController.playerSpeed = 5;
         }
     }
 
@@ -75,28 +76,13 @@ public class PlayerController : LivingEntity, IPickUp
             gunController.OnTriggerRelease();
         }
 
-        ray = input.ScreenRay;
-
-        if (Physics.Raycast(ray, out hit))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            if (hit.transform.CompareTag(weaponTag) && Input.GetKeyDown(KeyCode.E))
-            {
-
-                Debug.Log(GetComponent<Collider>());
-                // gunController.GetComponent<Gun>().Test(GetComponent<Collider>());
-                // gunController.equippedGun.GetComponent<Gun>().Test(GetComponent<Collider>());
-                // gunController.EquipGun(hit.transform.GetComponent<Gun>());
-                PickUp(hit.transform.GetComponent<Gun>());
-                // save the weapon                
-                //  weapons.Add(hit.collider.gameObject);
-
-                //  PickUp(guntoEquip);
-
-                // hides the weapon because it's now in our 'inventory'
-                //  hit.collider.gameObject.SetActive(false);
-
-
-            }
+            Instantiate(gunController.equippedGun, new Vector3(transform.position.x, 1, transform.position.z), transform.rotation);
+            gunController.equippedGun.DestroyGun(gunController.equippedGun);
+            animationPlayer.SetBool("Rifle", false);
+            animationPlayer.SetBool("Pistol", false);
+            playerController.playerSpeed = 6;
         }
     }
 
@@ -219,19 +205,21 @@ public class PlayerController : LivingEntity, IPickUp
 
     public void PickUp(Gun guntoEquip)
     {
-        Debug.Log(guntoEquip);
+        guntoEquip.name = guntoEquip.name.Replace("(Clone)", "");
+        animationPlayer.SetTrigger("Aiming");
 
-        if (guntoEquip.ToString() == "MachineGun(Clone)(Clone) (Gun)" || guntoEquip.ToString() == "Shotgun(Clone)(Clone) (Gun)")
+        if (guntoEquip.ToString() == "MachineGun (Gun)" || guntoEquip.ToString() == "Shotgun (Gun)")
         {
             animationPlayer.SetBool("Pistol", false);
             animationPlayer.SetBool("Rifle", true);
+            playerController.playerSpeed = 5;
         }
         else
         {
             animationPlayer.SetBool("Pistol", true);
             animationPlayer.SetBool("Rifle", false);
+            playerController.playerSpeed = 5;
         }
         gunController.EquipGun(guntoEquip);
-        Destroy(guntoEquip.gameObject);
     }
 }

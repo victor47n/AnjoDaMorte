@@ -17,11 +17,14 @@ public class Gun : MonoBehaviour
     bool triggerReleasedSinceLastShot;
     int shotsRemainingInBurst;
 
+    Light dropLight;
 
     void Start()
     {
         effectToSpawn = vfx[0];
         shotsRemainingInBurst = burstCount;
+        dropLight = GetComponent<Light>();
+        dropLight.enabled = false;
     }
 
     void Shoot()
@@ -75,12 +78,24 @@ public class Gun : MonoBehaviour
         shotsRemainingInBurst = burstCount;
     }
 
-    public void Test(Collider co)
+    private void OnTriggerStay(Collider co)
     {
-        if (co.tag == "Player")
+        if(co.tag == "Player")
         {
-            co.GetComponent<PlayerController>().PickUp(gameObject.GetComponent<Gun>());
-            Destroy(gameObject);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                co.GetComponent<PlayerController>().PickUp(gameObject.GetComponent<Gun>());
+                Destroy(gameObject);
+            }
         }
+    }
+
+    public void DestroyGun(Gun gun){
+        Destroy(gun.gameObject);
+    }
+
+    public void Teste(Gun seila)
+    {
+        seila.GetComponent<Animation>().Play("WeaponDropped");
     }
 }
