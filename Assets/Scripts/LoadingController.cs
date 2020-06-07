@@ -18,7 +18,7 @@ public class LoadingController : MonoBehaviour
     public static void CallLoading(int scene)
     {
         LoadingController.scene = scene;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     void Awake()
