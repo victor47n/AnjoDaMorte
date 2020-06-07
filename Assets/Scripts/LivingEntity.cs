@@ -45,4 +45,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         GameObject.Destroy(gameObject, 4);
     }
+
+    public float GetHealth(){
+        return health;
+    }
 }
