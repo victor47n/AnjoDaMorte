@@ -54,8 +54,8 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
 | Contagem de inimigos |  | X |  |
-| Menu iniciar | X |  |  |
-| Menu pause | X |  |  |
+| Menu iniciar |  |  | X |
+| Menu pause |  |  | X |
 | Barra de vida | X |  |  |
 | Artes (Tela pause, fim de jogo, inicio de fase, etc.) |  |  | X |
 
