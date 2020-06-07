@@ -4,11 +4,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInputs))]
-public class PlayerController : LivingEntity
+public class PlayerController : LivingEntity, IPickUp
 {
     [Header("Movement Properties")]
     public float playerSpeed = 15f;
     public float playerRotationSpeed = 20f;
+    private PlayerController playerController;
 
     [Header("Turn Player Properties")]
     public Transform turnPlayerTransform;
@@ -34,12 +35,15 @@ public class PlayerController : LivingEntity
     private Vector3 moveInput;
     private float forwardAmount;
     private float turnAmount;
+    RaycastHit hit;
+    Ray ray;
 
     protected override void Start()
     {
         base.Start();
         rigidBody = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInputs>();
+        playerController = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
         SetupAnimator();
 
@@ -49,10 +53,14 @@ public class PlayerController : LivingEntity
         {
             animationPlayer.SetBool("Rifle", true);
             animationPlayer.SetBool("Pistol", false);
+            playerController.playerSpeed = 5;
         }
-        else{
+        else
+        {
+            Debug.Log("entrou aqui");
             animationPlayer.SetBool("Pistol", true);
             animationPlayer.SetBool("Rifle", false);
+            playerController.playerSpeed = 5;
         }
     }
 
@@ -67,6 +75,15 @@ public class PlayerController : LivingEntity
         {
             gunController.OnTriggerRelease();
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Instantiate(gunController.equippedGun, new Vector3(transform.position.x, 1, transform.position.z), transform.rotation);
+            gunController.equippedGun.DestroyGun(gunController.equippedGun);
+            animationPlayer.SetBool("Rifle", false);
+            animationPlayer.SetBool("Pistol", false);
+            playerController.playerSpeed = 6;
+        }
     }
 
     void FixedUpdate()
@@ -76,7 +93,7 @@ public class PlayerController : LivingEntity
             HandleMovement();
             HandleTurnPlayer();
             HandleReticle();
-            
+
         }
     }
 
@@ -184,5 +201,25 @@ public class PlayerController : LivingEntity
     public override void BloodParticle(Vector3 pos, Quaternion rot)
     {
         Instantiate(VFXBloodParticle, pos, rot);
+    }
+
+    public void PickUp(Gun guntoEquip)
+    {
+        guntoEquip.name = guntoEquip.name.Replace("(Clone)", "");
+        animationPlayer.SetTrigger("Aiming");
+
+        if (guntoEquip.ToString() == "MachineGun (Gun)" || guntoEquip.ToString() == "Shotgun (Gun)")
+        {
+            animationPlayer.SetBool("Pistol", false);
+            animationPlayer.SetBool("Rifle", true);
+            playerController.playerSpeed = 5;
+        }
+        else
+        {
+            animationPlayer.SetBool("Pistol", true);
+            animationPlayer.SetBool("Rifle", false);
+            playerController.playerSpeed = 5;
+        }
+        gunController.EquipGun(guntoEquip);
     }
 }

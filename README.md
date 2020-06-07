@@ -26,7 +26,7 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Animação de movimentação |  |  | X |
 | Animação de morte |  |  | X |
 | Atirar |  |  | X |
-| Pegar armas do chão | X |  |  |
+| Pegar armas do chão |  |  | X |
 | Tomar dano |  |  | X |
 | Camera |  |  | X |
 | Crosshair |  |  | X |
@@ -38,13 +38,13 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 | Animação de morte |  |  | X |
 | Spawn de inimigos |  |  | X |
 | Atirar |  |  | X |
-| Dropar armas no chão | X |  |  |
+| Dropar armas no chão |  |  | X |
 | Tomar dano |  |  | X |
 
 ## Tarefas Cenários
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
-| Cenário base 1 |  | X |  |
+| Cenário base 1 |  |  | X |
 | Cenário base 2 |  | X |  |
 | Cenário base 3 |  | X |  |
 | Randomização de cenários | X |  |  | 
@@ -53,12 +53,11 @@ Esse modelo é utilizado para branchs que consistem em correções de **bugs** e
 ## Tarefas HUD
 | Tarefa | Não iniciada | Em processo | Finalizada |
 |--|--|--|--|
-| Contagem de inimigos | X |  |  |
+| Contagem de inimigos |  | X |  |
 | Menu iniciar | X |  |  |
 | Menu pause | X |  |  |
 | Barra de vida | X |  |  |
-| Artes (Tela pause, fim de jogo, inicio de fase, etc.) | X |  |  |
-| Tela de carregamento | | | X |
+| Artes (Tela pause, fim de jogo, inicio de fase, etc.) |  | X |  |
 
 ## Tarefas Armas
 | Tarefa | Não iniciada | Em processo | Finalizada |

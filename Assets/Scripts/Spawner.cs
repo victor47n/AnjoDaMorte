@@ -10,7 +10,8 @@ public class Spawner : MonoBehaviour
     private int noiseValues;
 
     public LayerMask EnemyLayer;
-    private float distanceGeneration = 3;
+    [Header("Distance spawn")]
+    public float distanceGeneration = 9;
     private float distancePlayerForGeneration = 20;
     private GameObject player;
 
