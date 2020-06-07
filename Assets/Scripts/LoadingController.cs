@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadingController : MonoBehaviour
 {
@@ -17,8 +18,7 @@ public class LoadingController : MonoBehaviour
     public static void CallLoading(int scene)
     {
         LoadingController.scene = scene;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-
+        SceneManager.LoadScene(2);
     }
 
     void Awake()
@@ -40,7 +40,7 @@ public class LoadingController : MonoBehaviour
         yield return new WaitForSeconds(3);
 
         //Tarefa assincrona de carregamento de Cena
-        AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(scene);
+        AsyncOperation async = SceneManager.LoadSceneAsync(scene);
 
         // While the asynchronous operation to load the new scene is not yet complete, continue waiting until it's done.
         while (!async.isDone)
