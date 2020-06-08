@@ -21,6 +21,7 @@ public class GameOverController : MonoBehaviour
         // AudioController.instance.Pause();
         // AudioController.instance.PlayOneShot(ScreenMusic);
         // FindObjectOfType<AudioManager>().
+        Cursor.visible = true;
         Time.timeScale = 0;
         FindObjectOfType<AudioManager>().Play("ScreenDeath");
         // AudioController.instance.priority = 0;
