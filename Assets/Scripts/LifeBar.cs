@@ -21,7 +21,6 @@ public class LifeBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(livingEntity)
-            lifeBar.value = livingEntity.GetHealth();
+       
     }
 }

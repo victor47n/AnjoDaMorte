@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Inimigo
   - EnemyShotgun
+  - Weapon
   - EnemyCounter
+  - HealthBar
   layers:
   - Default
   - TransparentFX
