@@ -18,9 +18,11 @@ public class GameOverController : MonoBehaviour
 
     void OnGameOver()
     {
-        AudioController.instance.PlayOneShot(ScreenMusic);
+        // AudioController.instance.Pause();
+        // AudioController.instance.PlayOneShot(ScreenMusic);
         // FindObjectOfType<AudioManager>().
-        // FindObjectOfType<AudioManager>().Play("ScreenDeath");
+        Time.timeScale = 0;
+        FindObjectOfType<AudioManager>().Play("ScreenDeath");
         // AudioController.instance.priority = 0;
         gameOverUI.SetActive(true);
     }
