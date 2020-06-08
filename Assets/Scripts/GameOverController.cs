@@ -31,6 +31,7 @@ public class GameOverController : MonoBehaviour
     public void StartNewGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        FindObjectOfType<AudioManager>().Play("BackgroundTheme");
     }
 
     public void Quit()
