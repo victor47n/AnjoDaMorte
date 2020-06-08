@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LivingEntity : MonoBehaviour, IDamageable
 {
@@ -8,13 +9,16 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected float health;
     protected bool dead;
 
-    public  Healthbar healthBar;
+    public Healthbar healthBar;
 
     public event System.Action OnDeath;
+
+    public GameObject GameOverUI;
 
     protected virtual void Start()
     {
         health = startingHealth;
+        Time.timeScale = 1;
     }
 
     public virtual void TakeHit(float damage, Collision hit)
@@ -29,7 +33,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             healthBar.TakeDamage(damage);
         }
-            
+
         if (health <= 0 && !dead)
         {
             Die();
@@ -38,7 +42,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public virtual void BloodParticle(Vector3 pos, Quaternion rot)
     {
-        
+
     }
 
     [ContextMenu("Self Destruct")]
@@ -49,6 +53,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             OnDeath();
         }
+
         GameObject.Destroy(gameObject, 4);
     }
 

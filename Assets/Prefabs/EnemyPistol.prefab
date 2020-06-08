@@ -2648,8 +2648,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 1
+  healthBar: {fileID: 0}
+  GameOverUI: {fileID: 0}
   VFXBloodParticle: {fileID: 3009756142894992707, guid: 78a0c0b226404294eade845e9a9c8228,
     type: 3}
+  DamageSound: {fileID: 8300000, guid: 80d7cb8dc0183624eb1d37874b4975ab, type: 3}
 --- !u!1 &7339177822081404153
 GameObject:
   m_ObjectHideFlags: 0

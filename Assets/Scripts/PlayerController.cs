@@ -38,9 +38,13 @@ public class PlayerController : LivingEntity, IPickUp
     RaycastHit hit;
     Ray ray;
 
+    [Header("SFX")]
+    public AudioClip DamageSound;
+
     protected override void Start()
     {
         base.Start();
+        
         rigidBody = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInputs>();
         playerController = GetComponent<PlayerController>();
@@ -84,6 +88,7 @@ public class PlayerController : LivingEntity, IPickUp
             animationPlayer.SetBool("Pistol", false);
             playerController.playerSpeed = 6;
         }
+
     }
 
     void FixedUpdate()
@@ -180,13 +185,15 @@ public class PlayerController : LivingEntity, IPickUp
         }
     }
 
-    public override void TakeHit(float damage, Collision hit)
+    public override void TakeDamage(float damage)
     {
         if (damage >= health)
         {
+            AudioController.instance.PlayOneShot(DamageSound);
+            // FindObjectOfType<AudioManager>().Play("PlayerDeath");
             Dead();
         }
-        base.TakeHit(damage, hit);
+        base.TakeDamage(damage);
     }
 
     void Dead()
