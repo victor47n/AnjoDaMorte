@@ -30,7 +30,6 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-
         if (player != null)
         {
             if (Vector3.Distance(transform.position, player.transform.position) > distancePlayerForGeneration)
