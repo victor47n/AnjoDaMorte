@@ -22,8 +22,11 @@ public class Spawner : MonoBehaviour
     int enemiesRemainingAlive;
     float nextSpawnTime;
 
+    EnemyCounter enemyCounter;
+
     void Start()
     {
+        enemyCounter = GameObject.FindWithTag("EnemyCounter").GetComponent(typeof(EnemyCounter)) as EnemyCounter;
         NextWave();
         player = GameObject.FindWithTag("Player");
     }
@@ -81,7 +84,7 @@ public class Spawner : MonoBehaviour
     void OnEnemyDeath()
     {
         enemiesRemainingAlive--;
-
+        enemyCounter.DecreaseEnemyLives();
         if (enemiesRemainingAlive == 0)
         {
             NextWave();
@@ -97,6 +100,7 @@ public class Spawner : MonoBehaviour
 
             enemiesRemainingToSpawn = currentWave.enemyCount;
             enemiesRemainingAlive = enemiesRemainingToSpawn;
+            enemyCounter.AddToAliveEnemies(enemiesRemainingAlive);
         }
     }
 
