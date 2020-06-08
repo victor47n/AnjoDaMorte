@@ -36,17 +36,24 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-       Play("BackgroundTheme"); 
+        Play("BackgroundTheme");
     }
 
     public void Play(string name)
     {
+        AudioSource[] Audios = gameObject.GetComponents<AudioSource>();
+        foreach (AudioSource audio in Audios)
+        {
+            audio.Stop();
+        }
+
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
-            Debug.LogWarning("Sound: " +name+ " not found!");
+            Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
+
         s.source.Play();
     }
 }
