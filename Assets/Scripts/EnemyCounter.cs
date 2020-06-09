@@ -18,6 +18,10 @@ public class EnemyCounter : MonoBehaviour
 
     public void DecreaseEnemyLives(){
         alive -= 1;
+        if(alive == 13)
+        {
+            PhaseTransition.StartEndPhase(false);
+        }
     }
 
     protected void GenerateText(){
@@ -27,7 +31,7 @@ public class EnemyCounter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

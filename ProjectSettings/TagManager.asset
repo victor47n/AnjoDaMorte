@@ -9,6 +9,8 @@ TagManager:
   - Weapon
   - EnemyCounter
   - HealthBar
+  - PhaseTransition
+  - EndGame
   layers:
   - Default
   - TransparentFX
