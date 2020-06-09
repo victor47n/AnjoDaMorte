@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent (typeof (NavMeshAgent))]
-public class EnemyController : LivingEntity {
+[RequireComponent(typeof(NavMeshAgent))]
+public class EnemyController : LivingEntity
+{
     public enum State { Idle, Chasing, Attacking }
     State currentState;
 
     NavMeshAgent pathfinder;
     Transform target;
+    LivingEntity targetEntity;
     float distance;
     private Vector3 finalTurnEnemyLookDir;
     Rigidbody enemyRigidbody;
     public GameObject VFXBloodParticle;
 
     float timeBetweenAttacks = 1;
+    float damage = 1;
     Transform enemyShotgun;
 
     float nextAttackTime;
@@ -31,197 +34,258 @@ public class EnemyController : LivingEntity {
     /* Gun variable */
     GunController gunController;
 
-    protected override void Start () {
-        base.Start ();
-        pathfinder = GetComponent<NavMeshAgent> ();
-        gunController = GetComponent<GunController> ();
-        animationEnemy = GetComponent<Animator> ();
-        enemyRigidbody = GetComponent<Rigidbody> ();
+    bool hasTarget;
 
-        if (GameObject.FindGameObjectWithTag ("EnemyShotgun") != null) {
-            enemyShotgun = GameObject.FindGameObjectWithTag ("EnemyShotgun").transform;
+    [Header("SFX")]
+    public AudioClip DamageSound;
+
+    protected override void Start()
+    {
+        base.Start();
+        pathfinder = GetComponent<NavMeshAgent>();
+        gunController = GetComponent<GunController>();
+        animationEnemy = GetComponent<Animator>();
+        enemyRigidbody = GetComponent<Rigidbody>();
+
+        if (GameObject.FindGameObjectWithTag("EnemyShotgun") != null)
+        {
+            enemyShotgun = GameObject.FindGameObjectWithTag("EnemyShotgun").transform;
         }
+        SetupAnimator();
 
-        target = GameObject.FindGameObjectWithTag ("Player").transform;
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            hasTarget = true;
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+            targetEntity = target.GetComponent<LivingEntity>();
+            targetEntity.OnDeath += OnTargetDeath;
 
-        distance = Vector3.Distance (transform.position, target.transform.position);
+            distance = Vector3.Distance(transform.position, target.transform.position);
 
-        if (distance > 12.3) {
-            currentState = State.Idle;
-        } else {
-            currentState = State.Chasing;
+            if (distance > 12.3)
+            {
+                currentState = State.Idle;
+            }
+            else
+            {
+                currentState = State.Chasing;
+            }
+
+            myCollisionRadius = GetComponent<CapsuleCollider>().radius;
+            targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
+
+
+            StartCoroutine(UpdatePath());
         }
-
-        myCollisionRadius = GetComponent<CapsuleCollider> ().radius;
-        targetCollisionRadius = target.GetComponent<CapsuleCollider> ().radius;
-
-        SetupAnimator ();
-
-        StartCoroutine (UpdatePath ());
     }
 
-    public override void TakeHit (float damage, Collision hit) {
-        if (damage >= health) {
-            Dead ();
-            GenerateWeapon (gunController.equippedGun);
+    public override void TakeHit(float damage, Collision hit)
+    {
+        if (damage >= health && !dead)
+        {
+            AudioController.instance.PlayOneShot(DamageSound);
+            Dead();
+            GenerateWeapon(gunController.equippedGun);
         }
-        base.TakeHit (damage, hit);
+        base.TakeHit(damage, hit);
     }
 
-    void Update () {
-        if (target != null) {
-            distance = Vector3.Distance (transform.position, target.transform.position);
+    void OnTargetDeath()
+    {
+        hasTarget = false;
+        currentState = State.Idle;
+    }
+
+    void Update()
+    {
+        if (hasTarget)
+        {
+            distance = Vector3.Distance(transform.position, target.transform.position);
 
             bool enoughDistance = Time.time > nextAttackTime && distance < 8.05;
 
-            if (enoughDistance == true) {
+            if (enoughDistance == true)
+            {
                 nextAttackTime = Time.time + timeBetweenAttacks;
-                StartCoroutine (Attack ());
+                StartCoroutine(Attack());
             }
         }
     }
 
-    public override void BloodParticle (Vector3 pos, Quaternion rot) {
-        Instantiate (VFXBloodParticle, pos, rot);
+    public override void BloodParticle(Vector3 pos, Quaternion rot)
+    {
+        Instantiate(VFXBloodParticle, pos, rot);
     }
 
-    void Dead () {
-        animationEnemy.SetTrigger ("Death");
+    void Dead()
+    {
+        animationEnemy.SetTrigger("Death");
         this.enabled = false;
         enemyRigidbody.constraints = RigidbodyConstraints.None;
         enemyRigidbody.velocity = Vector3.zero;
-        GetComponent<Collider> ().enabled = false;
+        GetComponent<Collider>().enabled = false;
         pathfinder.enabled = false;
     }
 
-    void GenerateWeapon (Gun dropWeapon) {
-        dropWeapon.name = dropWeapon.name.Replace ("(Clone)", "");
-        // Debug.Log(dropWeapon.GetType());
-        Gun Weapon = Instantiate (dropWeapon, new Vector3 (transform.position.x, 1, transform.position.z), transform.rotation);
-        Weapon.ActiveLight ();
-        // Debug.Log(weapon.GetType());
-        // seila.GetComponent<Animation>().Play("WeaponDropped");
-        // seila.GetComponent<Light>().enabled = true;
-        // seila.GetComponent<Animation>().
-        // Debug.Log(seila.GetComponent<Gun>());
-        // seila.GetComponent<Light>().enabled = true;
-        // seila.GetComponent<Gun>().Luz(seila);
-
-        // Debug.Log(seila.GetComponent<Light>().enabled);
-        // seila.Luz(seila);
-        // seila.gameObject.GetComponent<Light>().enabled = true;
-        // seila.GetComponent<Gun>().AnimationDrop(seila, 1);
-
-        // dropWeapon.GetComponent<Gun>().Animation(dropWeapon);
+    void GenerateWeapon(Gun dropWeapon)
+    {
+        dropWeapon.name = dropWeapon.name.Replace("(Clone)", "");
+        Gun Weapon = Instantiate(dropWeapon, new Vector3(transform.position.x, 1, transform.position.z), transform.rotation);
+        Weapon.ActiveLight();
     }
 
-    IEnumerator Attack () {
+    IEnumerator Attack()
+    {
         float attackSpeed = .5f;
         float percent = 0;
+        bool hasAppliedDamage = false;
 
-        if (enemyShotgun == null) {
-            if (distance >= 6.05 && distance < 8.05) {
-                if (target != null) {
+        if (enemyShotgun == null)
+        {
+            if (distance >= 6.05 && distance < 8.05)
+            {
+                if (hasTarget)
+                {
                     currentState = State.Attacking;
                     pathfinder.enabled = true;
 
-                    // animationEnemy.SetBool("Moviment", true);
-                    animationEnemy.SetBool ("Firing", true);
-                    UpdateAnimator (distance);
+                    animationEnemy.SetBool("Firing", true);
+                    UpdateAnimator(distance);
 
-                    while (percent <= 1) {
-                        if (target != null) {
+                    while (percent <= 1)
+                    {
+                        if (percent >= .5f && !hasAppliedDamage)
+                        {
+                            hasAppliedDamage = true;
+                            targetEntity.TakeDamage(damage);
+                        }
+                        if (hasTarget)
+                        {
                             Vector3 turnEnemyLookDir = (target.position - transform.position).normalized;
                             turnEnemyLookDir.y = 0f;
 
-                            finalTurnEnemyLookDir = Vector3.Lerp (finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
-                            transform.rotation = Quaternion.LookRotation (finalTurnEnemyLookDir);
+                            finalTurnEnemyLookDir = Vector3.Lerp(finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
+                            transform.rotation = Quaternion.LookRotation(finalTurnEnemyLookDir);
 
                             percent += Time.deltaTime * attackSpeed;
                             // Atirar
-                            gunController.OnTriggerHold ();
+                            gunController.OnTriggerHold();
                         }
 
                         yield return null;
                     }
-                    gunController.OnTriggerRelease ();
-                }
-            } else if (distance < 6.05) {
-                if (target != null) {
-                    currentState = State.Attacking;
-                    pathfinder.enabled = false;
-
-                    animationEnemy.SetBool ("Firing", true);
-                    UpdateAnimator (distance);
-
-                    while (percent <= 1) {
-                        if (target != null) {
-                            Vector3 turnEnemyLookDir = (target.position - transform.position).normalized;
-                            turnEnemyLookDir.y = 0f;
-
-                            finalTurnEnemyLookDir = Vector3.Lerp (finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
-                            transform.rotation = Quaternion.LookRotation (finalTurnEnemyLookDir);
-
-                            percent += Time.deltaTime * attackSpeed;
-                            // Atirar
-                            gunController.OnTriggerHold ();
-                        }
-
-                        yield return null;
-                    }
-                    gunController.OnTriggerRelease ();
+                    gunController.OnTriggerRelease();
                 }
             }
-        } else {
-            if (distance >= 4.05 && distance < 6.05) {
-                if (target != null) {
-                    currentState = State.Attacking;
-                    pathfinder.enabled = true;
-
-                    animationEnemy.SetBool ("Firing", true);
-                    UpdateAnimator (distance);
-
-                    while (percent <= 1) {
-                        if (target != null) {
-                            Vector3 turnEnemyLookDir = (target.position - transform.position).normalized;
-                            turnEnemyLookDir.y = 0f;
-
-                            finalTurnEnemyLookDir = Vector3.Lerp (finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
-                            transform.rotation = Quaternion.LookRotation (finalTurnEnemyLookDir);
-
-                            percent += Time.deltaTime * attackSpeed;
-                            // Atirar
-                            gunController.OnTriggerHold ();
-                        }
-
-                        yield return null;
-                    }
-                    gunController.OnTriggerRelease ();
-                }
-            } else if (distance < 4.05) {
-                if (target != null) {
+            else if (distance < 6.05)
+            {
+                if (hasTarget)
+                {
                     currentState = State.Attacking;
                     pathfinder.enabled = false;
 
-                    animationEnemy.SetBool ("Firing", true);
-                    UpdateAnimator (distance);
+                    animationEnemy.SetBool("Firing", true);
+                    UpdateAnimator(distance);
 
-                    while (percent <= 1) {
-                        if (target != null) {
+                    while (percent <= 1)
+                    {
+                        if (percent >= .5f && !hasAppliedDamage)
+                        {
+                            hasAppliedDamage = true;
+                            targetEntity.TakeDamage(damage);
+                        }
+
+                        if (hasTarget)
+                        {
                             Vector3 turnEnemyLookDir = (target.position - transform.position).normalized;
                             turnEnemyLookDir.y = 0f;
 
-                            finalTurnEnemyLookDir = Vector3.Lerp (finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
-                            transform.rotation = Quaternion.LookRotation (finalTurnEnemyLookDir);
+                            finalTurnEnemyLookDir = Vector3.Lerp(finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
+                            transform.rotation = Quaternion.LookRotation(finalTurnEnemyLookDir);
 
                             percent += Time.deltaTime * attackSpeed;
                             // Atirar
-                            gunController.OnTriggerHold ();
+                            gunController.OnTriggerHold();
                         }
 
                         yield return null;
                     }
-                    gunController.OnTriggerRelease ();
+                    gunController.OnTriggerRelease();
+                }
+            }
+        }
+        else
+        {
+            if (distance >= 4.05 && distance < 6.05)
+            {
+                if (hasTarget)
+                {
+                    currentState = State.Attacking;
+                    pathfinder.enabled = true;
+
+                    animationEnemy.SetBool("Firing", true);
+                    UpdateAnimator(distance);
+
+                    while (percent <= 1)
+                    {
+                        if (percent >= .5f && !hasAppliedDamage)
+                        {
+                            hasAppliedDamage = true;
+                            targetEntity.TakeDamage(damage);
+                        }
+
+                        if (hasTarget)
+                        {
+                            Vector3 turnEnemyLookDir = (target.position - transform.position).normalized;
+                            turnEnemyLookDir.y = 0f;
+
+                            finalTurnEnemyLookDir = Vector3.Lerp(finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
+                            transform.rotation = Quaternion.LookRotation(finalTurnEnemyLookDir);
+
+                            percent += Time.deltaTime * attackSpeed;
+                            // Atirar
+                            gunController.OnTriggerHold();
+                        }
+
+                        yield return null;
+                    }
+                    gunController.OnTriggerRelease();
+                }
+            }
+            else if (distance < 4.05)
+            {
+                if (hasTarget)
+                {
+                    currentState = State.Attacking;
+                    pathfinder.enabled = false;
+
+                    animationEnemy.SetBool("Firing", true);
+                    UpdateAnimator(distance);
+
+                    while (percent <= 1)
+                    {
+                        if (percent >= .5f && !hasAppliedDamage)
+                        {
+                            hasAppliedDamage = true;
+                            targetEntity.TakeDamage(damage);
+                        }
+                        
+                        if (hasTarget)
+                        {
+                            Vector3 turnEnemyLookDir = (target.position - transform.position).normalized;
+                            turnEnemyLookDir.y = 0f;
+
+                            finalTurnEnemyLookDir = Vector3.Lerp(finalTurnEnemyLookDir, turnEnemyLookDir, Time.deltaTime * 8);
+                            transform.rotation = Quaternion.LookRotation(finalTurnEnemyLookDir);
+
+                            percent += Time.deltaTime * attackSpeed;
+                            // Atirar
+                            gunController.OnTriggerHold();
+                        }
+
+                        yield return null;
+                    }
+                    gunController.OnTriggerRelease();
                 }
             }
         }
@@ -230,67 +294,86 @@ public class EnemyController : LivingEntity {
         pathfinder.enabled = true;
     }
 
-    IEnumerator UpdatePath () {
+    IEnumerator UpdatePath()
+    {
         float refreshRate = .25f;
 
-        while (target != null) {
-            if (enemyShotgun != null) {
-                if (distance > 12.1) {
+        while (hasTarget)
+        {
+            if (enemyShotgun != null)
+            {
+                if (distance > 12.1)
+                {
                     currentState = State.Idle;
-                } else if (distance >= 6.06 && distance <= 12.1) {
+                }
+                else if (distance >= 6.06 && distance <= 12.1)
+                {
                     currentState = State.Chasing;
                 }
-            } else {
-                if (distance > 12.1) {
+            }
+            else
+            {
+                if (distance > 12.1)
+                {
                     currentState = State.Idle;
-                } else if (distance >= 8.06 && distance <= 12.1) {
+                }
+                else if (distance >= 8.06 && distance <= 12.1)
+                {
                     currentState = State.Chasing;
                 }
             }
 
-            if (currentState == State.Idle) {
-                if (!dead) {
+            if (currentState == State.Idle)
+            {
+                if (!dead)
+                {
                     pathfinder.enabled = false;
-                    UpdateAnimator (distance);
-                    animationEnemy.SetBool ("Firing", false);
+                    UpdateAnimator(distance);
+                    animationEnemy.SetBool("Firing", false);
                 }
             }
 
-            if (currentState == State.Chasing) {
+            if (currentState == State.Chasing)
+            {
                 pathfinder.enabled = true;
 
                 Vector3 direcao = target.transform.position - transform.position;
 
-                Quaternion novaRotacao = Quaternion.LookRotation (direcao);
-                GetComponent<Rigidbody> ().MoveRotation (novaRotacao);
+                Quaternion novaRotacao = Quaternion.LookRotation(direcao);
+                GetComponent<Rigidbody>().MoveRotation(novaRotacao);
 
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 Vector3 targetPosition = target.position - dirToTarget;
 
-                UpdateAnimator (distance);
+                UpdateAnimator(distance);
 
-                if (!dead) {
-                    pathfinder.SetDestination (targetPosition);
+                if (!dead)
+                {
+                    pathfinder.SetDestination(targetPosition);
                 }
             }
-            yield return new WaitForSeconds (refreshRate);
+            yield return new WaitForSeconds(refreshRate);
         }
-        animationEnemy.SetBool ("Firing", false);
-        UpdateAnimator (20);
+        animationEnemy.SetBool("Firing", false);
+        UpdateAnimator(20);
 
     }
 
-    protected virtual void UpdateAnimator (float move) {
-        animationEnemy.SetFloat ("Distance", move);
+    protected virtual void UpdateAnimator(float move)
+    {
+        animationEnemy.SetFloat("Distance", move);
     }
 
-    protected virtual void SetupAnimator () {
-        animationEnemy = GetComponent<Animator> ();
+    protected virtual void SetupAnimator()
+    {
+        animationEnemy = GetComponent<Animator>();
 
-        foreach (var childAnimator in GetComponentsInChildren<Animator> ()) {
-            if (childAnimator != animationEnemy) {
+        foreach (var childAnimator in GetComponentsInChildren<Animator>())
+        {
+            if (childAnimator != animationEnemy)
+            {
                 animationEnemy.avatar = childAnimator.avatar;
-                Destroy (childAnimator);
+                Destroy(childAnimator);
                 break;
             }
         }

@@ -198,6 +198,7 @@ MonoBehaviour:
   firingSpeed: 1
   fireMode: 1
   burstCount: 1
+  ShootSound: {fileID: 8300000, guid: afe65fd374f7ef247909fbee4d3da435, type: 3}
 --- !u!65 &583611522368991848
 BoxCollider:
   m_ObjectHideFlags: 0
