@@ -84,7 +84,6 @@ public class EnemyController : LivingEntity
         if (damage >= health && !dead)
         {
             AudioController.instance.PlayOneShot(DamageSound);
-            // FindObjectOfType<AudioManager>().Play("EnemyDeath");
             Dead();
             GenerateWeapon(gunController.equippedGun);
         }
@@ -131,23 +130,8 @@ public class EnemyController : LivingEntity
     void GenerateWeapon(Gun dropWeapon)
     {
         dropWeapon.name = dropWeapon.name.Replace("(Clone)", "");
-        // Debug.Log(dropWeapon.GetType());
         Gun Weapon = Instantiate(dropWeapon, new Vector3(transform.position.x, 1, transform.position.z), transform.rotation);
         Weapon.ActiveLight();
-        // Debug.Log(weapon.GetType());
-        // seila.GetComponent<Animation>().Play("WeaponDropped");
-        // seila.GetComponent<Light>().enabled = true;
-        // seila.GetComponent<Animation>().
-        // Debug.Log(seila.GetComponent<Gun>());
-        // seila.GetComponent<Light>().enabled = true;
-        // seila.GetComponent<Gun>().Luz(seila);
-
-        // Debug.Log(seila.GetComponent<Light>().enabled);
-        // seila.Luz(seila);
-        // seila.gameObject.GetComponent<Light>().enabled = true;
-        // seila.GetComponent<Gun>().AnimationDrop(seila, 1);
-
-        // dropWeapon.GetComponent<Gun>().Animation(dropWeapon);
     }
 
     IEnumerator Attack()
@@ -165,7 +149,6 @@ public class EnemyController : LivingEntity
                     currentState = State.Attacking;
                     pathfinder.enabled = true;
 
-                    // animationEnemy.SetBool("Moviment", true);
                     animationEnemy.SetBool("Firing", true);
                     UpdateAnimator(distance);
 

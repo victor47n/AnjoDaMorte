@@ -66,6 +66,7 @@ public class PlayerController : LivingEntity, IPickUp
             animationPlayer.SetBool("Rifle", false);
             playerController.playerSpeed = 5;
         }
+
     }
 
     void Update()
@@ -190,7 +191,6 @@ public class PlayerController : LivingEntity, IPickUp
         if (damage >= health)
         {
             AudioController.instance.PlayOneShot(DamageSound);
-            // FindObjectOfType<AudioManager>().Play("PlayerDeath");
             Dead();
         }
         base.TakeDamage(damage);

@@ -9,7 +9,7 @@ public class GameOverController : MonoBehaviour
     public GameObject gameOverUI;
 
     [Header("SFX")]
-    public AudioClip ScreenMusic;
+    public string ThemeMusic;
 
     void Start()
     {
@@ -18,20 +18,16 @@ public class GameOverController : MonoBehaviour
 
     void OnGameOver()
     {
-        // AudioController.instance.Pause();
-        // AudioController.instance.PlayOneShot(ScreenMusic);
-        // FindObjectOfType<AudioManager>().
         Cursor.visible = true;
         Time.timeScale = 0;
         FindObjectOfType<AudioManager>().Play("ScreenDeath");
-        // AudioController.instance.priority = 0;
         gameOverUI.SetActive(true);
     }
 
     public void StartNewGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        FindObjectOfType<AudioManager>().Play("BackgroundTheme");
+        FindObjectOfType<AudioManager>().Play(ThemeMusic);
     }
 
     public void Quit()
