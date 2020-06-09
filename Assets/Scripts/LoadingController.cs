@@ -50,7 +50,7 @@ public class LoadingController : MonoBehaviour {
         foreach (string v in Storys.data) {
             StoryText.text = v;
             Debug.Log (v.ToString ());
-            yield return new WaitForSeconds (15);
+            yield return new WaitForSeconds (1);
         }
 
         //Tarefa assincrona de carregamento de Cena
