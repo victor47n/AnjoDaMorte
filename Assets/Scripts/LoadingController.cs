@@ -51,7 +51,6 @@ public class LoadingController : MonoBehaviour {
             StoryText.text = v;
             Debug.Log (v.ToString ());
             yield return new WaitForSeconds (15);
-
         }
 
         //Tarefa assincrona de carregamento de Cena

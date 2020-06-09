@@ -84,7 +84,6 @@ public class Spawner : MonoBehaviour
     void OnEnemyDeath()
     {
         enemiesRemainingAlive--;
-        enemyCounter.DecreaseEnemyLives();
         if (enemiesRemainingAlive == 0)
         {
             NextWave();

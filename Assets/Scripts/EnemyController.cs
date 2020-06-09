@@ -39,8 +39,11 @@ public class EnemyController : LivingEntity
     [Header("SFX")]
     public AudioClip DamageSound;
 
+    private EnemyCounter enemyCounter;
+
     protected override void Start()
     {
+        enemyCounter = GameObject.FindWithTag("EnemyCounter").GetComponent(typeof(EnemyCounter)) as EnemyCounter;
         base.Start();
         pathfinder = GetComponent<NavMeshAgent>();
         gunController = GetComponent<GunController>();
@@ -85,6 +88,7 @@ public class EnemyController : LivingEntity
         {
             AudioController.instance.PlayOneShot(DamageSound);
             Dead();
+            if(enemyCounter) enemyCounter.DecreaseEnemyLives();
             GenerateWeapon(gunController.equippedGun);
         }
         base.TakeHit(damage, hit);

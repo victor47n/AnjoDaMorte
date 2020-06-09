@@ -18,7 +18,7 @@ public class EnemyCounter : MonoBehaviour
 
     public void DecreaseEnemyLives(){
         alive -= 1;
-        if(alive == 0)
+        if(alive == 13)
         {
             PhaseTransition.StartEndPhase(false);
         }
