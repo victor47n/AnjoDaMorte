@@ -19,7 +19,7 @@ public class GameOverController : MonoBehaviour
     void OnGameOver()
     {
         Cursor.visible = true;
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
         FindObjectOfType<AudioManager>().Play("ScreenDeath");
         gameOverUI.SetActive(true);
     }
