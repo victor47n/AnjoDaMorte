@@ -61,7 +61,6 @@ public class PlayerController : LivingEntity, IPickUp
         }
         else
         {
-            Debug.Log("entrou aqui");
             animationPlayer.SetBool("Pistol", true);
             animationPlayer.SetBool("Rifle", false);
             playerController.playerSpeed = 5;
