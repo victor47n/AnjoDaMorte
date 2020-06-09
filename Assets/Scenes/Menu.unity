@@ -691,7 +691,7 @@ PrefabInstance:
     - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
         type: 3}
       propertyPath: sounds.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
         type: 3}
@@ -751,6 +751,26 @@ PrefabInstance:
     - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
         type: 3}
       propertyPath: sounds.Array.data[2].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
+        type: 3}
+      propertyPath: sounds.Array.data[3].name
+      value: BackgroundTheme2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
+        type: 3}
+      propertyPath: sounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5373755b69fc80f428165bdc1d5f7797, type: 3}
+    - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
+        type: 3}
+      propertyPath: sounds.Array.data[3].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045259002653335017, guid: a5adf8927dee3154c8dcb992fb7210a7,
+        type: 3}
+      propertyPath: sounds.Array.data[3].pitch
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4090139819383604227, guid: a5adf8927dee3154c8dcb992fb7210a7,

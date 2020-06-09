@@ -13,8 +13,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
 
     public event System.Action OnDeath;
 
-    public GameObject GameOverUI;
-
     protected virtual void Start()
     {
         health = startingHealth;

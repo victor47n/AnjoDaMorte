@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3265014282091407942}
   - component: {fileID: 3406754262674047678}
   - component: {fileID: 8783010354167520369}
-  - component: {fileID: 2760145651140719179}
   m_Layer: 0
   m_Name: MachineGun
   m_TagString: Weapon
@@ -178,22 +177,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!111 &2760145651140719179
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5029213350316718575}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 82f34a747beca854daf19f1674c73e6d, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 82f34a747beca854daf19f1674c73e6d, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &5065406351367655886
 GameObject:
   m_ObjectHideFlags: 0

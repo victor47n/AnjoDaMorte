@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
     public LayerMask EnemyLayer;
     [Header("Distance spawn")]
     public float distanceGeneration = 9;
-    private float distancePlayerForGeneration = 20;
+    public float distancePlayerForGeneration = 20;
     private GameObject player;
 
     Wave currentWave;
