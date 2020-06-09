@@ -69,19 +69,8 @@ public class Gun : MonoBehaviour
 
                 if (shootingPoint != null)
                 {
-                    /* Posiciona as balas na altura certa */
                     vfx = Instantiate(effectToSpawn, shootingPoint[i].transform.position, shootingPoint[i].transform.rotation);
-                    // if (fireMode.Equals("Auto") || fireMode.Equals("Single"))
-                    // {
-                    //     FindObjectOfType<AudioManager>().Play("Shooting");
-                    // }
-                    // if (fireMode.Equals("Burst"))
-                    // {
-                    //     FindObjectOfType<AudioManager>().Play("ShootingShotgun");
-                    // }
-                    
-                    // AudioController.instance.volume = 0.3f;
-                    
+    
                     AudioController.instance.PlayOneShot(ShootSound);
                 }
                 else
@@ -100,7 +89,6 @@ public class Gun : MonoBehaviour
 
     public void OnTriggerRelease()
     {
-        // AudioController.instance.PlayOneShot(ShootSound);
         triggerReleasedSinceLastShot = true;
         shotsRemainingInBurst = burstCount;
     }
