@@ -1,5 +1,5 @@
 # AnjoDaMorte
-Um jogo criado para passar de ano
+Criado como trabalho para a matéria de Desenvolvimento de Jogos
 
 # VERSÃO DO UNITY
 
